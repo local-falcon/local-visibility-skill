@@ -148,7 +148,7 @@ This is the most misunderstood aspect of ChatGPT local optimization. Businesses 
 | Source | Function | Priority |
 |--------|----------|----------|
 | **Bing Places for Business** | Primary structured local data | Claim immediately |
-| **Foursquare** | 70%+ of name, address, photos, ratings | Critical |
+| **Foursquare** | major source of name, address, photos, ratings | Critical |
 | **Mapbox** | Powers visual map output | Indirect |
 | **Yelp** | Trusted review source | High |
 | **BBB** | Trust/verification signal | High |

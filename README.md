@@ -71,7 +71,7 @@ These are **completely different metrics** measuring **completely different thin
 | Google AI Overviews | GBP, reviews, Reddit, Yelp, Quora, business websites |
 | Google AI Mode | Same as above, but REPLACES traditional results entirely |
 | Google Gemini | Training data + live web browsing, may redirect to Search/Maps |
-| ChatGPT | Bing Places, **Foursquare (70%+)**, Yelp, BBB, editorial lists |
+| ChatGPT | Bing search, Wikipedia, Yelp, BBB, Foursquare, editorial lists |
 | Grok | **X/Twitter posts (exclusive)**, web search |
 
 ---
@@ -111,7 +111,7 @@ local-falcon-skill/
 ## Example Use Cases
 
 ### "Why am I invisible on ChatGPT?"
-The skill knows ChatGPT doesn't access Google at all - it uses Bing Places and Foursquare (70%+ of data). It will guide you to optimize those platforms specifically.
+The skill knows ChatGPT doesn't access Google at all - it uses Bing search, Wikipedia, and various directories. It will guide you to optimize those platforms specifically.
 
 ### "My SoLV dropped but SAIV stayed the same"
 The skill understands these are separate systems. A SoLV drop (maps) has different causes than a SAIV drop (AI platforms) and will diagnose accordingly.
