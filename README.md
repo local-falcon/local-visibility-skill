@@ -129,6 +129,7 @@ With metrics like ATRP, ARP, SoLV, and Found In, the skill applies Local Falcon'
 | **Enterprise Marketers** | Multi-location management, brand consistency, trend monitoring |
 | **SMB Owners** | Actionable optimization guidance, understanding what matters |
 | **Developers** | Building local SEO tools with expert knowledge built-in |
+| **AI Agents** | Providing expert-level local SEO and AI visibility guidance to users |
 
 ---
 
