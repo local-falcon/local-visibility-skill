@@ -122,6 +122,94 @@ WHEN executing runLocalFalconScan:
 
 ---
 
+## Intelligent Scan Setup (Conversational Approach)
+
+The most common user request is "help me set up a scan." Here's how to do it RIGHT - by gathering context first, not asking generic questions.
+
+### Why This Matters
+
+**DON'T do this:**
+```
+Agent: "What keywords do you want to track?"
+Agent: "What grid size?"
+Agent: "What radius?"
+```
+
+Users often don't know the answers. These questions without context aren't helpful.
+
+**DO this instead:**
+```
+Agent: [Uses MCP to pull their business info]
+Agent: "I see you're a plumber in Dallas. For plumbers, most customers search
+        'plumber near me' or 'emergency plumber'. Want to start with one of those?"
+Agent: "Since you're a service area business, we should scan a wider area -
+        maybe 10 miles. What's the farthest you'd drive for a job?"
+```
+
+### The Right Flow
+
+**Step 1: Pull Context First**
+```
+listAllLocalFalconLocations → See what they have saved
+  ↓
+IF saved: Get GBP data (category, address, service areas)
+IF not: searchForLocalFalconBusinessLocation → Get Place ID and GBP data
+```
+
+**Step 2: Suggest Keywords Based on GBP Category**
+
+| GBP Category | Suggested Keywords |
+|--------------|-------------------|
+| Plumber | `plumber near me`, `emergency plumber`, `plumbing services` |
+| Italian Restaurant | `italian restaurant`, `best pasta near me`, `italian food` |
+| HVAC Contractor | `ac repair near me`, `hvac service`, `heating and cooling` |
+| Personal Injury Attorney | `personal injury lawyer`, `car accident attorney`, `injury attorney near me` |
+| Hair Salon | `hair salon near me`, `haircut`, `best salon` |
+
+**Agent says:** "Your GBP shows you're a [category]. Most customers search for '[primary keyword]' - want to start there, or is there a specific service you want to track?"
+
+**Step 3: Determine Grid Based on Business Type**
+
+| Type | How to Detect | Grid Recommendation |
+|------|---------------|---------------------|
+| **Storefront** | Has physical address, no service areas | 7x7 or 9x9, 0.5-1mi radius |
+| **SAB (Service Area Business)** | Has service areas defined | 13x13+, 3-10mi radius |
+| **Hybrid** | Has both address and service areas | Depends - ask about customer behavior |
+
+**Agent says:** "Do customers come to your location, or do you go to them?"
+
+**Step 4: Center Point Logic**
+
+- **Storefronts:** Use business address (automatic)
+- **SABs:** Center where customers ARE, not where office is
+
+**Agent says:** "For service businesses, we center the scan where your customers are. Where do you get most of your jobs - any particular neighborhood or part of town?"
+
+**Step 5: Execute with AI Analysis**
+
+```
+runLocalFalconScan:
+  place_id: [from discovery]
+  keyword: [suggested and confirmed]
+  platform: google (default) or user's choice
+  grid_size: [appropriate for business type]
+  grid_distance: [appropriate for service radius]
+  ai_analysis: true  ← ALWAYS ENABLE THIS
+```
+
+**Agent says:** "Running the scan now with AI Analysis enabled - this will give you expert-level insights automatically."
+
+### Campaign vs Single Scan
+
+**Ask about campaigns when:**
+- User has 3+ locations saved
+- User mentions "track over time" or "monitor"
+- User asks about multiple locations
+
+**Agent says:** "Since you have multiple locations, would you like to set this up as a Campaign? That way it runs automatically on a schedule and you can compare locations."
+
+---
+
 ## Standard Workflows
 
 ### Workflow 1: Account Health Check

@@ -407,6 +407,139 @@ When MCP is connected, use these workflows:
 5. getLocalFalconReport - Retrieve results
 ```
 
+---
+
+## Intelligent Scan Setup (Conversational Workflow)
+
+When a user wants to set up a new scan, DON'T ask a list of generic questions. Instead, use MCP tools to learn about their business first, then guide them intelligently.
+
+### Phase 1: Discovery (Use MCP First)
+
+**Before asking ANY questions, pull context:**
+
+```
+1. listAllLocalFalconLocations - See what locations they already have
+2. If they have a location saved:
+   - Check GBP data: primary category, address, service areas
+   - Check existing scan history: what have they scanned before?
+3. If they DON'T have a location saved:
+   - Ask for business name OR Place ID
+   - searchForLocalFalconBusinessLocation to find it
+   - Review the GBP data returned
+```
+
+**What you learn from GBP data:**
+- **Primary Category** → Suggests relevant keywords
+- **Address vs Service Areas** → Determines if SAB (Service Area Business)
+- **Existing reviews** → Shows what customers mention
+
+### Phase 2: Intelligent Keyword Selection
+
+This is the **hardest part** for users. Don't ask "what keywords do you want?" - they often don't know.
+
+**Do this instead:**
+
+1. **Look at their GBP primary category** → Suggest 2-3 keywords based on it
+   - "Plumber" → `plumber near me`, `emergency plumber`, `plumbing services`
+   - "Italian Restaurant" → `italian restaurant`, `best pasta near me`, `italian food`
+
+2. **Ask ONE clarifying question:**
+   - "Your GBP shows you're a [category]. Are there specific services you want to rank for, like [relevant examples], or should we start with your core category?"
+
+3. **Recommend starting simple:**
+   - "I'd suggest starting with `[primary service] near me` - it's the most common search pattern. We can add more specific keywords in follow-up scans."
+
+### Phase 3: Platform Selection
+
+**Don't list all options blindly.** Guide based on their goals:
+
+| If user says... | Recommend |
+|-----------------|-----------|
+| "I want to rank on Google Maps" | `google` platform |
+| "I want to show up in AI results" | Start with `chatgpt` or `aimode` |
+| "I want full visibility picture" | Campaign with multiple platforms |
+| Nothing specific | Default to `google` for first scan, explain AI platforms exist |
+
+**Explain the difference:**
+- "Google Maps scans show your map pack rankings across a geographic grid."
+- "AI platform scans show whether ChatGPT, Gemini, AI Mode, etc. mention your business when users ask about your services."
+
+### Phase 4: Grid Configuration (Context-Dependent)
+
+**Don't ask about grid size in a vacuum.** Provide context:
+
+| Business Type | Recommended Grid | Why |
+|---------------|------------------|-----|
+| **Storefront** (restaurant, retail) | 7x7 or 9x9, 0.5-1mi radius | Customers come TO you; tight area |
+| **Service Area** (plumber, HVAC) | 13x13 or larger, 3-10mi radius | You GO to customers; wide area |
+| **Multi-location** (franchise) | Depends - may need separate scans | Each location has different competitors |
+
+**Ask with context:**
+- "Do customers come to your location, or do you travel to them? This affects how wide we should scan."
+- "What's the farthest you'd realistically travel for a job? 5 miles? 15 miles?"
+
+### Phase 5: Center Point
+
+**For storefronts:** Use the business address. Simple.
+
+**For SABs (Service Area Businesses):**
+- "For service area businesses, the scan center should be where your CUSTOMERS are, not where your office is."
+- "Where do you get the most jobs? That's where we should center the scan."
+- If they don't know: "Let's start centered on [their city center or main service area], and we can adjust after seeing results."
+
+### Phase 6: Execute with AI Analysis
+
+**ALWAYS enable AI Analysis Report** when running scans:
+- "I'm enabling the AI Analysis option - this gives you automated expert insights beyond just the raw numbers."
+
+```
+runLocalFalconScan with:
+- keyword: [selected keyword]
+- platform: [selected platform]
+- grid_size: [appropriate for business type]
+- grid_distance: [appropriate for service radius]
+- center_lat/center_lng: [calculated center point]
+- ai_analysis: true (ALWAYS)
+```
+
+### Single Location vs Multi-Location
+
+**Don't ask "how many locations?" upfront.** Instead:
+
+1. Check `listAllLocalFalconLocations` - if they have multiple, acknowledge it
+2. If setting up first scan: "Are we focusing on one location today, or do you need to track multiple?"
+3. **Multi-location = Campaigns:**
+   - "For multiple locations, we should set up a Campaign - that lets you track all locations together and compare their performance."
+
+---
+
+## Campaign Setup (Multi-Location Workflow)
+
+When user has multiple locations OR wants recurring scans:
+
+### When to Recommend Campaigns
+
+- User mentions "franchise," "multiple locations," "chain"
+- `listAllLocalFalconLocations` shows 3+ locations
+- User wants to "track over time" or "compare locations"
+
+### Campaign Setup Flow
+
+```
+1. listAllLocalFalconLocations - Get their locations
+2. Confirm which locations to include
+3. createLocalFalconCampaign with:
+   - locations: [selected Place IDs]
+   - keyword: [agreed keyword]
+   - platform: [agreed platform]
+   - frequency: weekly (most common) or monthly
+   - grid configuration: [appropriate settings]
+```
+
+**Explain the value:**
+- "Campaigns run automatically on a schedule, so you can track ranking changes over time without manually running scans."
+- "You'll be able to compare all your locations side-by-side."
+
 ### AI Visibility Audit
 ```
 1. listLocalFalconScanReports - Check for AI platform scans
