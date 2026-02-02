@@ -60,7 +60,7 @@ Reference the `SKILL.md` file directly or include its contents in your agent's s
 | Metric | Full Name | What It Measures | Platforms |
 |--------|-----------|------------------|-----------|
 | **SoLV** | Share of Local Voice | % of map grid points ranking #1-3 | Google Maps, Apple Maps |
-| **SAIV** | Share of AI Visibility | % of AI responses mentioning business | ChatGPT, Gemini, Grok, AI Mode |
+| **SAIV** | Share of AI Visibility | % of AI responses mentioning business | ChatGPT, Gemini, Grok, AI Mode, AI Overviews |
 
 These are **completely different metrics** measuring **completely different things**.
 
@@ -70,6 +70,7 @@ These are **completely different metrics** measuring **completely different thin
 |----------|---------------------|
 | Google AI Overviews | GBP, reviews, Reddit, Yelp, Quora, business websites |
 | Google AI Mode | Same as above, but REPLACES traditional results entirely |
+| Google Gemini | Training data + live web browsing, may redirect to Search/Maps |
 | ChatGPT | Bing Places, **Foursquare (70%+)**, Yelp, BBB, editorial lists |
 | Grok | **X/Twitter posts (exclusive)**, web search |
 
